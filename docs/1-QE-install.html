@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<!-- Useful for tablet and mobile based browsing-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Title of the page (not necessarily the lab) - for reference only, not displayed on the page-->
+	<title>Project Creation</title>
+	<!-- CSS template stylesheet must be linked here-->
+	<link href="css/renesas_layout_style.css" rel="stylesheet" type="text/css">
+	<!-- Javascript based lab templating helper must be placed here-->
+	<script type="text/javascript" src="js/lab-templater.js"></script>
+</head>
+
+<body>
+	<!-- Populate the page header (banner, title & navigation menu)-->
+	<script>lab_templater.Generate_header();</script>
+
+	<!-- Begin the main content of the page-->
+	<div class="main-content">
+
+		<!-- Page/Section Summary & Description-->
+		<summary>1. Install QE for capacitive touch</summary>
+		<p>Here we will guide you through installaing the QE for capacitive touch tools to your existing
+			installation.<br>
+			<i><b>Please note:</b> if you have have already installed QE tools during your e2studio installation you can
+				skip this section.</i>
+		</p>
+
+		<!-- Start adding "details" sections for lab steps-->
+		<details open>
+			<summary>1.1 QE Common Update 1/6</summary>
+			<p>After launching e² studio &amp; opening/selecting a workspace, perform the following:<br>
+				<b>[Help] &rarr; [Install New Software]</b>
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/ins.png" alt="">
+		</details>
+
+		<details>
+			<summary>1.2 QE Common Update 2/6</summary>
+			<p>Using the dropdown in the dialog "Work with:" please select the <b>QE Common Update Site</b>.</p>
+			<img class="modal-thumbnails" src="img/img_lab/qecommonsite.png" alt="">
+		</details>
+
+		<details>
+			<summary>1.3 QE Common Update 3/6</summary>
+			<p>Select the latest version of the <b>Renesas QE common</b> tools and click <b>Next &gt;</b>.</p>
+			<img class="modal-thumbnails" src="img/img_lab/qecommontools.png" alt="">
+		</details>
+
+		<details>
+			<summary>1.4 QE Common Update 4/6</summary>
+			<p>You will be potentially confronted with an <b>Install Remediation Page</b> - pleas make the selections
+				shown in the below image.</p>
+			<img class="modal-thumbnails" src="img/img_lab/installremediation.png" alt="">
+		</details>
+
+		<details>
+			<summary>1.5 QE Common Update 5/6</summary>
+			<p>Ensure the install details reflect the image below and again click <b>Next &gt;</b>.</p>
+			<img class="modal-thumbnails" src="img/img_lab/installdetails.png" alt="">
+		</details>
+
+		<details>
+			<summary>1.6 QE Common Update 6/6</summary>
+			<p>Now please accept the license agreements and click <b>Finish</b>.</p>
+			<img class="modal-thumbnails" src="img/img_lab/qecommonlicense.png" alt="">
+			<p>In the bottom right of e2studio you will notice the installation is progressing.</p>
+			<img class="modal-thumbnails" src="img/img_lab/installprogress.png" alt="">
+			<p>When the <b>Software Updates</b> diialolgg appears, please click <b>Restart Now</b>.</p>
+			<img class="modal-thumbnails" src="img/img_lab/restartnow.png" alt="">
+		</details>
+
+		<details>
+			<summary>1.7 QE Capacitive Update 1/6</summary>
+			<p>Once the restart has completed, perform the following:<br>
+				<b>[Help] &rarr; [Install New Software]</b>
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/ins.png" alt="">
+		</details>
+
+		<details>
+			<summary>1.8 QE Capacitive Update 2/6</summary>
+			<p>This time select the <b>Add...</b> button and using the dialog input the following information:<br>
+				<b>Name:</b> <i>QE for Capacitive Touch</i><br>
+				<b>Location:</b> <i>http://tool-support.renesas.com/e2studio/qe/captouch</i>
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/addqe.png" alt="">
+			<img class="modal-thumbnails" src="img/img_lab/addqedialog.png" alt="">
+		</details>
+
+		<details>
+			<summary>1.9 QE Capacitive Update 3/6</summary>
+			<p>After waiting for the dialog to fetch the update data, please select the newest <b>Renesas QE for
+					Capacitive Touch</b>
+				tools and click <b>Next &gt;</b>.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/qecapacitivetools.png" alt="">
+		</details>
+
+		<details>
+			<summary>1.10 QE Capacitive Update 4/6</summary>
+			<p>Ensure the install details reflect the image below and again click <b>Next &gt;</b>.</p>
+			<img class="modal-thumbnails" src="img/img_lab/installdetailscap.png" alt="">
+		</details>
+
+		<details>
+			<summary>1.11 QE Capacitive Update 5/6</summary>
+			<p>Now please accept the license agreements and click <b>Finish</b>.</p>
+			<img class="modal-thumbnails" src="img/img_lab/qecapacitivelicense.png" alt="">
+			<p>In the bottom right of e2studio you will notice the installation is progressing.</p>
+			<img class="modal-thumbnails" src="img/img_lab/installprogress.png" alt="">
+			<p>You may be asked to trust some cerificates, please do so as shown below.</p>
+			<img class="modal-thumbnails" src="img/img_lab/trustcertificates.png" alt="">
+			<p>When the <b>Software Updates</b> diialolgg appears, please click <b>Restart Now</b>.</p>
+			<img class="modal-thumbnails" src="img/img_lab/restartnow.png" alt="">
+		</details>
+
+		<details>
+			<summary>1.12 QE Capacitive Update 6/6</summary>
+			<p>To verify the installation was a success, please do:<br>
+				<b>[Renesas Views] &rarr; [Renesas QE]</b><br>
+				And check the views in the image below are available to you.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/installverify.png" alt="">
+		</details>
+
+		<!-- Prepare the pages modal images-->
+		<script>lab_templater.Prepare_modal();</script>
+
+		<!-- Button for going to the next page-->
+		<script>lab_templater.Generate_next_page_button("Next...");</script>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<!-- Useful for tablet and mobile based browsing-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Title of the page (not necessarily the lab) - for reference only, not displayed on the page-->
+	<title>Build And Debug</title>
+	<!-- CSS template stylesheet must be linked here-->
+	<link href="css/renesas_layout_style.css" rel="stylesheet" type="text/css">
+	<!-- Javascript based lab templating helper must be placed here-->
+	<script type="text/javascript" src="js/lab-templater.js"></script>
+
+	<!-- Addition of code highlighting Stylesheet & Script-->
+	<link rel="stylesheet" href="js/highlight/styles/atom-one-light.min.css">
+	<script type="text/javascript" src="js/highlight/highlight.min.js"></script>
+	<script>hljs.highlightAll();</script>
+</head>
+
+<body>
+	<!-- Populate the page header (banner, title & navigation menu)-->
+	<script>lab_templater.Generate_header();</script>
+
+	<!-- Begin the main content of the page-->
+	<div class="main-content">
+
+		<!-- Page/Section Summary & Description-->
+		<summary>5. Build &amp; Debug</summary>
+		<p>Here we will guide you through debugging this labs project and will provide details on how to verify the
+			working of the project.</p>
+
+		<!-- Start adding "details" sections for lab steps-->
+		<details open>
+			<summary>5.1 Edit the source</summary>
+			<p>First we need to open the main source file, located:<br>
+				<b>[Project]</b> &rarr; <b>src</b> &rarr; <b><i>&lt;project_name&gt;</i>.c</b><br>
+				Extern a declaration to the QE generated sample application and make a call to the application.
+			</p>
+			<pre><code class="C">extern void qe_touch_main(void);</code></pre>
+			<pre><code class="C">qe_touch_main();</code></pre>
+			<p>This is shown below.</p>
+			<img class="modal-thumbnails" src="img/img_lab/mainc.png" alt="">
+			<p>Second lets add some code which illuminates the on-board LED when a proximity event is detected.<br>
+				Copy the code below and copy it into the file we generated earlier located at:<br>
+				<b>[Project]</b> &rarr; <b>qe_gen</b> &rarr; <b>qe_touch_sample.c</b><br>
+				The code should go at line 67 where the TODO: statement exists.
+			</p>
+			<pre><code class="C">CCS0 = (button_status > 0UL) ? 2U : 0U;</code></pre>
+			<p>The code above toggle the current controlled IO registers to sink 5mA producing a magenta LED.<br>
+				Code insertion shown below:</p>
+			<img class="modal-thumbnails" src="img/img_lab/ledcode.png" alt="">
+		</details>
+
+		<details>
+			<summary>5.2 Build the project</summary>
+			<p>To build the project please <b>[Right-Click]</b> the project and click <b>Build Project</b>.</p>
+			<img class="modal-thumbnails" src="img/img_lab/projectbuild.gif" alt="">
+		</details>
+
+		<details>
+			<summary>5.3 Hardware</summary>
+			<p>Before debugging the project, please ensure headers are fitted to the header <b>H1</b> in positions 1-2
+				(VBATT-VDD) &amp; 4-5 (VDD_RL78 - VDD).<br>
+				Finally connect the E2-Lite - the user does not need to connect batteries for this lab as we will supply
+				the board via the debugger.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/headers.png" alt="">
+			<img class="modal-thumbnails" src="img/img_lab/e2lite.png" alt="">
+		</details>
+
+		<details>
+			<summary>5.4 Debugging the project</summary>
+			<p>To start a debug session please select the project by clicking on it and click the debug icon along the
+				menu bar.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/startdebug.gif" alt="">
+			<p>Finally Click the <b>run</b> icon, first it will run to main, click the <b>run</b> icon again and the
+				project will start running.</p>
+			<img class="modal-thumbnails" src="img/img_lab/rundebug.gif" alt="">
+		</details>
+
+		<details>
+			<summary>5.5 Trigger the LED <i>[optional]</i></summary>
+			<p>Now as your hand approaches the proximity electrode the LED should light up.<br>
+				When the hand is retracted the LED should then turn off.
+			</p>
+		</details>
+
+		<details>
+			<summary>5.6 Start Monitoring (Emulator)</summary>
+			<p>Now onto the second major function of the QE tools.<br>
+				The monitoring function allows us to configure the middleware in many ways - the following steps will
+				show
+				us a plethora of those ways.<br>
+				First Navigate back to the CapTouch Workflow, either by the tab or using the<br>
+				<b>Renesas Views</b> &rarr; <b>Renesas QE</b> &rarr; <b>CapTouch Workflow (QE)</b><br>
+				method outlined earlier.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/relaunchwf.gif" alt="">
+		</details>
+
+		<details>
+			<summary>5.7 Enable Monitoring</summary>
+			<p>Navigate to <b>Start Monitoring (Emulator)</b> within <b>4.Monitoring</b> and select <b>Show Views</b>
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/monitoringviews.gif" alt="">
+			<p>Now perform the following (you may need to expand the windows as shown in the .gif):</p>
+			<ol>
+				<li>In the <b>CapTouch Board Monitor (QE)</b> view select <b>Enable Monitoring</b></li>
+				<li>In the <b>CapTouch Status Chart (QE)</b> view select <b>Sync a selection</b></li>
+				<li>In the <b>CapTouch Parameters (QE)</b> view select <b>Sync a selection</b></li>
+			</ol>.
+			<img class="modal-thumbnails" src="img/img_lab/enablemonitoring.gif" alt="">
+		</details>
+
+		<details>
+			<summary>5.8 Change the threshold</summary>
+			<p> Now we are going to change the threshold, the threshold is the value it which indicates a touch.</p>
+			<ul>
+				<li><b>[Threshold + hystersis]</b> is the point at which a "touch" is detected</li>
+				<li><b>[Threshold - hystersis]</b> is the point at which a "no-touch" is detected</li>
+			</ul>
+			<p> This is where fine tuning the sensitivity distance in a proximity application occurs. <br>
+				Or when tuning touch pressure occurs in a touch application.<br>
+				To change this value, do the following:</p>
+				<ol>
+					<li>Navigate to <b>Threshold</b> in the <b>CapTouch Parameters (QE)</b> view</li>
+					<li>Reduce the <b>Threshold</b> value by approximately a third (i.e., 500 becomes 350)</li>
+					<li>Click the <b>Write value to the target board</b> button</li>
+					<li>Notice how in the <b>CapTouch Status Chart (QE)</b> view the threshold (green line) reduces</li>
+					<li>Now approach the board with your hand and notice how the sensing distance has increased</li>
+				</ol>
+				<img class="modal-thumbnails" src="img/img_lab/threshold.gif" alt="">
+		</details>
+
+		<details>
+			<summary>5.9 Change the positive noise filter cycle counts</summary>
+			<p> Now we are going to change the positive noise filter cycle count value. <br>
+				This value represents the <b>number of consecutive touches</b> before propagating a touch event.<br>
+				The negative cycle count is the opposite i.e., the <b>number of consecutive no-touches</b> before propagating a no-touch event.
+			</p>
+			<p> This is where fine tuning the filters starts.<br>
+				To change this value, do the following:</p>
+				<ol>
+					<li>Navigate to <b>Positive Noise Filter Cycle</b> value in the <b>CapTouch Parameters (QE)</b> view</li>
+					<li>Change the <b>Positive Noise Filter Cycle</b> value to 100</li>
+					<li>Click the <b>Write value to the target board</b> button</li>
+					<li>Before apporaching the board with our hand ensure the <b>CapTouch Board Monitor (QE)</b> view is showing <b>Button 00</b></li>
+					<li>Now approach the board with your hand and notice how the touch event does not occur immediatley</li>
+					<li><b>Note:</b> the touch event can be seen as a hand on top of <b>Button00</b> in the <b>CapTouch Board Monitor (QE)</b> view</li>
+					<li>Change the <b>Positive Noise Filter Cycle</b> value to 3</li>
+					<li>Click the <b>Write value to the target board</b> button</li>
+					<li><b>Note:</b> this is just to reset the value so we can evaluate the other parameters in later steps.</li>
+				</ol>
+				<img class="modal-thumbnails" src="img/img_lab/pnfcycle.gif" alt="">
+		</details>
+
+		<details>
+			<summary>5.10 Change the drift correction</summary>
+			<p>To understand the drift correction value one must understand the reference value.
+				The reference value is the baseline value or the resting value with minimal external
+				disturbance - i.e., the svalue when the system is in idle state.<br>
+				The threshold applies to this value - so if your reference value is 1500 counts
+				and your threshold value is 500 counts, then your threshold lies at 1500 + 500 = 2000 counts.<br>
+				Now the reference value may be subject to change due to many external factors such as temperature or humidity.<br>
+				Therefore the middleware provides a mechanism, that after a settabel number of counts, the reference value is 
+				updated according to the latest value measured <b>under no-touch</b> conditions. Thus 
+				providing envirnmental compensation.<br>
+				To see this in action, please perform the following:
+			</p>
+			<ol>
+				<li>Navigate to <b>Drift Correction</b> in the <b>CapTouch Parameters (QE)</b> view</li>
+				<li>Change the <b>Drift Correction</b> value to 25</li>
+				<li>Click the <b>Write value to the target board</b> button</li>
+				<li>Now <b>slowly</b> approach the board with your hand and notice how the reference value (blue line) and threshold value (green line) move to accomodate this</li>
+				<li>Change the <b>Drift Correction</b> value back to 255</li>
+				<li>Click the <b>Write value to the target board</b> button</li>
+				<li><b>Note:</b> this is just to reset the value so we can evaluate the other parameters in later steps.</li>
+			</ol>
+			<img class="modal-thumbnails" src="img/img_lab/driftcorrection.gif" alt="">
+		</details>
+
+		<details>
+			<summary>5.11 Change the long touch cancel</summary>
+			<p>The long touch cancel value is how many consecutive touches are detected before cancelling the touch event.
+				On cancelling the touch event the reference value is immediately shifted up to the count value measured when long
+				touch cancel is triggered.<br>
+				To see this in action, please perform the following:
+			</p>
+			<ol>
+				<li>Navigate to <b>Long Touch Cancel Cycle</b> in the <b>CapTouch Parameters (QE)</b> view</li>
+				<li>Change the <b>Long Touch Cancel Cycle</b> value to 100</li>
+				<li>Click the <b>Write value to the target board</b> button</li>
+				<li>Now approach the board with your hand to engage a touch and keep your hand still</li>
+				<li>Keep your hand there and notice how the touch is eventually stopped detection and the reference value (blue line) shifts up</li>
+				<li>Change the <b>Long Touch Cancel Cycle</b> value back to 0</li>
+				<li>Click the <b>Write value to the target board</b> button</li>
+			</ol>
+			<img class="modal-thumbnails" src="img/img_lab/longtouchcancel.gif" alt="">
+		</details>
+
+		<details>
+			<summary>5.12 Output parameters file</summary>
+			<p>Now simply click the <b>Output Parameter Files</b> button in the <b>CapTouch Parameters (QE)</b> view.<br>
+				This saves the current set of parameters to the file <b>[Project]</b> &rarr; <b>qe_gen</b> &rarr; <b>qe_touch_config.c</b>.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/paramfile.gif" alt="">
+		</details>
+
+		<details>
+			<summary>5.13 Summary</summary>
+			<p>In this lab you have gone through the process for creating a capacitive touch application from
+				scratch.<br>
+				The principles outlined here abstracted from hardware can be used on any RL78G2x based device.
+			</p>
+		</details>
+
+		<!-- Prepare the pages modal images-->
+		<script>lab_templater.Prepare_modal();</script>
+
+		<!-- Button for going to the next page-->
+		<script>lab_templater.Generate_next_page_button("Finish");</script>
+
+		<!-- Setup code copying functionality on all appropriately formatted code snippets-->
+		<script>Setup_code_copy();</script>
+
+	</div>
+</body>
+
+</html>

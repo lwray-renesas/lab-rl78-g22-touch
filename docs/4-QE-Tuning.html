@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<!-- Useful for tablet and mobile based browsing-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Title of the page (not necessarily the lab) - for reference only, not displayed on the page-->
+	<title>Source Code</title>
+	<!-- CSS template stylesheet must be linked here-->
+	<link href="css/renesas_layout_style.css" rel="stylesheet" type="text/css">
+	<!-- Javascript based lab templating helper must be placed here-->
+	<script type="text/javascript" src="js/lab-templater.js"></script>
+
+	<!-- Addition of code highlighting Stylesheet & Script-->
+	<link rel="stylesheet" href="js/highlight/styles/atom-one-light.min.css">
+	<script type="text/javascript" src="js/highlight/highlight.min.js"></script>
+	<script>hljs.highlightAll();</script>
+</head>
+
+<body>
+	<!-- Populate the page header (banner, title & navigation menu)-->
+	<script>lab_templater.Generate_header();</script>
+
+	<!-- Begin the main content of the page-->
+	<div class="main-content">
+
+		<!-- Page/Section Summary & Description-->
+		<summary>4. QE Tuning</summary>
+		<p>Here we will guide you through the setup and tuning of the capactive touch application using the Renesas QE
+			tools.
+		</p>
+
+		<!-- Start adding "details" sections for lab steps-->
+		<details open>
+			<summary>4.1 Open QE Workflow</summary>
+			<p>First we need to open the QE workflow, a view which guides you through the process of
+				setting up a capactive touch project with QE tools. This is the foundation of a Renesas
+				Capacitive Touch Application.<br>
+				Please perform the following:<br>
+				<b>Renesas Views</b> &rarr; <b>Renesas QE</b> &rarr; <b>CapTouch Workflow (QE)</b><br>
+				In the event the window opens somewhere difficult to view, simply click and drag the tab
+				into the central view.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/qeopenwf.gif" alt="">
+		</details>
+
+		<details>
+			<summary>4.2 Select Project</summary>
+			<p>In the <b>Select a Project</b> within <b>1.Preparation</b> use the dropdown to select the project we have
+				just created.</p>
+			<img class="modal-thumbnails" src="img/img_lab/qeselectproject.gif" alt="">
+		</details>
+
+		<details>
+			<summary>4.3 Prepare Configuration</summary>
+			<p>In the <b>Prepare a Configuration</b> within <b>1.Preparation</b> use the dropdown to <b>Create a new
+					configuration</b>.<br>
+				Within the dialog perform the following:</p>
+			<ol>
+				<li>Select (click once) the <b>Button</b> object and place (click once) somewhere in the configuration
+					area</li>
+				<li>Press <b>[Esc]</b> to stop placing buttons</li>
+				<li>Double click the button to configure it</li>
+				<li>Use the drop down to set the TS electrode pin to TS25</li>
+				<li>Click <b>OK</b></li>
+				<li>Click <b>Create</b> to finish creating the configuration</li>
+			</ol>
+			<img class="modal-thumbnails" src="img/img_lab/qeprepareconfig.gif" alt="">
+		</details>
+
+		<details>
+			<summary>4.4 Hardware</summary>
+			<p>Before debugging/tuning the project, please ensure headers are fitted to the header <b>H1</b> in
+				positions 1-2
+				(VBATT-VDD) &amp; 4-5 (VDD_RL78 - VDD).<br>
+				Finally connect the E2-Lite - the user does not need to connect batteries for this lab as we will supply
+				the board via the debugger.
+
+				G22:<br>
+				J15 open<br>
+				J16 shorted<br>
+				J17 2-3<br>
+				If populated:<br>
+				J12, J13, J14 2-3<br>
+
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/headers.png" alt="">
+			<img class="modal-thumbnails" src="img/img_lab/e2lite.png" alt="">
+		</details>
+
+		<details>
+			<summary>4.5 Source Modification</summary>
+			<p>A bug has been introduced in the drivers since adding support of new RL78 devices, to workaround this bug
+				we have to do the following.<br>
+				Navigate to:<br>
+				<b>[Project]</b> &rarr; <b>src</b> &rarr; <b>smc_gen</b> &rarr; <b>r_config</b> &rarr;
+				<b>r_ctsu_config.h</b><br>
+				and replace line 65 contents:<br>
+			<pre
+				class="no-copy"><code class="C">#if (defined(BSP_MCU_GROUP_RL78G22) || defined(BSP_MCU_GROUP_RL78G23))</code></pre>
+			with:
+			<pre><code class="C">#if 1</code></pre>
+			i.e., going from:
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/sourcemodbefore.png" alt="">
+			<p>To:</p>
+			<img class="modal-thumbnails" src="img/img_lab/sourcemodafter.png" alt="">
+			<p>And save with <b>[Ctrl] + S</b></p>
+		</details>
+
+		<details>
+			<summary>4.6 Debug Configuration Modification</summary>
+			<p>A bug has been introduced in the drivers since adding support of new RL78 devices, to workaround this bug
+				we have to do the following.<br>
+				<b>[Right-Click Project]</b> &rarr; <b>Debug As</b> &rarr; <b>Debug Configurations</b><br>
+				Then inside the dialog select the hardware debug configuration of your project and:<br>
+				<b>Debugger tab</b> &rarr; <b>Debug Tool Settings sub-tab</b><br>
+				Set <i>"Allow to access by stopping execution while running"</i> to <i>"Yes"</i>.
+				<br>G22 - Select COM port.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/debugconfigfix.gif" alt="">
+		</details>
+
+		<details>
+			<summary>4.7 Start Tuning (Emulator)</summary>
+			<p>Now return to the initial tuning screen and start tuning.<br>
+				The tuning process is central to the QE for Capacitive touch tools - it is during this process the
+				perihperal is
+				configured to work according to the physical hardware connected, i.e, the electrodes.<br>
+				As well as setting up the peripheral features such as scan times, frequencies and drive currents - which
+				are all
+				done automatically for us - we will set an initial proximity/touch threshold.<br>
+				In the <b>Start Tuning (Emulator)</b> within <b>2.Tuning Touch Sensors</b> and select <b>Start
+					Tuning</b>.</p>
+			<img class="modal-thumbnails" src="img/img_lab/starttuning.png" alt="">
+			<p>Click yes when the dialog appears asking you to acknowledge the non-ideal powersupply of the E2-Lite.</p>
+			<img class="modal-thumbnails" src="img/img_lab/powersupplyyes.png" alt="">
+			<p>Now follow the on screen insrtuctions, when confronted with the sensitivtity tuning (Step 5/6)
+				move your hand near the sensor (within ~3CM) and notice how the counter value increases,
+				press any key on the keyboard while your hand is within proximity.<br>
+				Examples below are given for non-touch and touch counts respectively.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/normalcount.png" alt=""><br>
+			<img class="modal-thumbnails" src="img/img_lab/highcount.png" alt="">
+			<p>After pressing the key, you will be asked if you would like to continue the tuning process, please do so.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/continuetuning.png" alt="">
+		</details>
+
+		<details>
+			<summary>4.8 Output Parameter Files</summary>
+			<p>Now the tuning has been performed, we need to extract the data which has been computed into useful
+				.c and .h files for use in our drivers and middleware.<br>
+				To do this, navigate to <b>Output Parameter Files</b> within <b>2.Tuning Touch Sensors</b> and select
+				<b>Output Parameter Files</b>.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/qeoutputparams.gif" alt="">
+		</details>
+
+		<details>
+			<summary>4.9 Implement Program</summary>
+			<p>Finally to simplify application creation, the QE tools can generate a simple sample applicaiton for
+				us.<br>
+				To do this, navigate to <b>Implement Program</b> within <b>3.Coding</b> and select <b>Show
+					Sample</b><br>
+				Inside the dialog that appears, select <b>Output to a file</b> - this outputs the sample .c file we will
+				reference later.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/qeimplementprog.gif" alt="">
+		</details>
+
+		<!-- Prepare the pages modal images-->
+		<script>lab_templater.Prepare_modal();</script>
+
+		<!-- Button for going to the next page-->
+		<script>lab_templater.Generate_next_page_button("Next...");</script>
+
+		<!-- Setup code copying functionality on all appropriately formatted code snippets-->
+		<script>Setup_code_copy();</script>
+
+	</div>
+</body>
+
+</html>

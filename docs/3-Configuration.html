@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<!-- Useful for tablet and mobile based browsing-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Title of the page (not necessarily the lab) - for reference only, not displayed on the page-->
+	<title>Project Configuration</title>
+	<!-- CSS template stylesheet must be linked here-->
+	<link href="css/renesas_layout_style.css" rel="stylesheet" type="text/css">
+	<!-- Javascript based lab templating helper must be placed here-->
+	<script type="text/javascript" src="js/lab-templater.js"></script>
+</head>
+
+<body>
+	<!-- Populate the page header (banner, title & navigation menu)-->
+	<script>lab_templater.Generate_header();</script>
+
+	<!-- Begin the main content of the page-->
+	<div class="main-content">
+
+		<!-- Page/Section Summary & Description-->
+		<summary>3. Project Configuration</summary>
+		<p>Here we will guide you through configuring a device &amp; it's peripherals on the RL78/G22 Fast Prototyping Board (FPB).<br>
+			For more information on the smart configurator please consult the e<sup>2</sup>studio users manual and
+			<a target="_blank"
+				href="https://www.renesas.com/us/en/document/man/smart-configurator-users-manual-rl78-api-reference">Smart
+				Configurator User Manual (RL78 API Reference)</a>.
+		</p>
+
+		<!-- Start adding "details" sections for lab steps-->
+		<details open>
+			<summary>3.1 Clocks &amp; Supply</summary>
+			<p>Navigate to the Clocks Tab &amp; perform the following:</p>
+			<ol>
+				<li>Set the <b>Operating mode</b> to <i>High-speed main mode 1.8(V)~5.5(V)</i><br>
+					This sets the operating mode/voltage of the device used for things like flash programming & in other
+					back end operations of the smart configurator.</li>
+				<li>Set the <b>EVDD setting</b> to <i>1.8 V &le; EVDD 5.5 &le; V</i><br>
+					This sets the operating voltage of EVDD, as above.</li>
+				<li>Enable the low-speed on-chip oscillator as the source clock for fSXP (sub-system clock)
+					and disable XT1.<br>
+					This uses the LOCO as the fSXP - a crystal is not fitted on this board - therefore it cannot be
+					used.</li>
+			</ol>
+			<img class="modal-thumbnails" src="img/img_lab/clocks.gif" alt="">
+		</details>
+
+		<details>
+			<summary>3.2 CTSU Driver</summary>
+			<p>Navigate to the Components Tab.<br>
+				This section is where the "magic" happens. The peripheral functions &amp; middlewares can be included,
+				removed and configured from this single location.<br>
+				The process outlined here for adding and configuring the CTSU (Capacitive Touch Sensing Unit) -
+				is the same one used for <b>all</b> components.<br>
+				It is in the configuration of the peripherals after adding them when the process/layout between the
+				peripherals will differ.
+			</p>
+			<ol>
+				<li>First click the add components button</li>
+				<li>Here you will be presented with the <b>Software Component Selection</b> dialog - you can use the
+					filters along the top or simply scroll to find the component of interest.<br>
+					We will select the <i>Capacitive Sesning Unit Driver</i> component</li>
+				<li>Click <b>Finish</b></li>
+			</ol>
+			<p>The CTSU driver is the driver controlling the CTSU2L peripheral on the RL78/G23.<br>
+				We will:
+			</p>
+			<ul>
+				<li>Use the <b>TSCAP</b> pin as the powersupply to the capacitive touch current drive
+					circuit.
+				</li>
+				<li>Use the <b>TS23</b> pin which is connected to capacitive touch button 2.</li>
+				<li>Use the <b>TS24</b> pin which is connected to capacitive touch button 1.</li>
+				<li>Use <b>TS20</b>, <b>TS21</b> &amp; <b>TS22</b> pins which is connected to the capacitive touch slider.</li>
+				<li>Configure the driver to use the <b>DTC</b> to handle the <i>Data transfer of INTCTSUWR &
+						INCTSURD</i>.<br>
+					This automates the configuration of the internal CTSU registers during a scan, avoiding using the
+					CPU.
+				</li>
+			</ul>
+			<img class="modal-thumbnails" src="img/img_lab/configurectsu.gif" alt="">
+		</details>
+
+		<details>
+			<summary>3.3 Touch Middleware</summary>
+			<p>Now using the above mechanism, do the following to include the <b>Touch Middleware</b> component.<br>
+				The touch middleware contains the tuning &amp; monitoring code as well as the filtering parameters
+				which we will use the QE tools to interact with.<br>
+				The middleware sits on top of the CTSU driver and controls it, abstracting the user away from the
+				hardware.
+				Meaning the user doesn't need to interact with the CTSU driver in the code.<br>
+				No further configuration is required.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/configuretouch.gif" alt="">
+		</details>
+
+		<details>
+			<summary>3.4 Port</summary>
+			<p>The <b>Ports</b> component controls the GPIO ports for things like LED control and display I/O, please do
+				the following:</p>
+			<ol>
+				<li>Add the <i>Ports</i> component</li>
+				<li><b>Resource:</b> <i>PORT</i></li>
+			</ol>
+			<p>Make the following changes to the configuration:</p>
+			<ol>
+				<li><b>PORT6 tab:</b> Set the following to <b>Output</b> &amp; <b>Output 1</b>;
+					<i>P62</i>, <i>P63</i><br>
+					These are the LED control pins.
+				</li>
+			</ol>
+			<img class="modal-thumbnails" src="img/img_lab/configureport.gif" alt="">
+		</details>
+
+		<details>
+			<summary>3.5 Generate Code</summary>
+			<p>Now click Generate Code.</p>
+			<img class="modal-thumbnails" src="img/img_lab/generatecode.gif" alt="">
+			<p>What happens here is the src/smc_gen folder is populated with code reflecting the
+				settings made in the smart configurator.
+			</p>
+		</details>
+
+		<!-- Prepare the pages modal images-->
+		<script>lab_templater.Prepare_modal();</script>
+
+		<!-- Button for going to the next page-->
+		<script>lab_templater.Generate_next_page_button("Next...");</script>
+	</div>
+</body>
+
+</html>
