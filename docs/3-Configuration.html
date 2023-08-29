@@ -91,13 +91,46 @@
 				The middleware sits on top of the CTSU driver and controls it, abstracting the user away from the
 				hardware.
 				Meaning the user doesn't need to interact with the CTSU driver in the code.<br>
-				No further configuration is required.
+				Once added, please make the following settings:
 			</p>
+			<ul>
+				<li><b>Support QE monitor using UART</b>: <i>Enable</i> - this allows us to monitor the internals of the touch middleware using UART.</li>
+				<li><b>Support QE tuning using UART</b>: <i>Enable</i> - this allows us to tune the internals of the touch middleware and CTSU driver using UART.</li>
+				<li><b>UART channel</b>: <i>UART1</i> - this is the UART channel we will be using on the hardware.</li>
+			</ul>
 			<img class="modal-thumbnails" src="img/img_lab/configuretouch.gif" alt="">
 		</details>
 
 		<details>
-			<summary>3.4 Port</summary>
+			<summary>3.4 UART</summary>
+			<p>Now we will add the UART driver which will be use in the tuning and monitoring of the capactive touch peripheral.<br>
+			The following settings must be made:</p>
+			<ul>
+				<li><b>Operation</b>: <i>Transmission/Reception</i></li>
+				<li><b>Resource</b>: <i>UART1</i></li>
+				<li><b>Click Finish</b></li>
+			</ul>
+			<img class="modal-thumbnails" src="img/img_lab/configureuart0.gif" alt="">
+			<p>Now fix the operation to:</p>
+			<ul>
+				<li>Tranmission tab
+					<ul>
+						<li><b>Clock source</b>: <i>fCLK/2</i></li>
+						<li><b>Transfer rate setting</b>: <i>115200</i></li>
+					</ul>
+				</li>
+				<li>Reception tab
+					<ul>
+						<li><b>Clock source</b>: <i>fCLK/2</i></li>
+						<li><b>Transfer rate setting</b>: <i>115200</i></li>
+					</ul>
+				</li>
+			</ul>
+			<img class="modal-thumbnails" src="img/img_lab/configureuart1.gif" alt="">
+		</details>
+
+		<details>
+			<summary>3.5 Port</summary>
 			<p>The <b>Ports</b> component controls the GPIO ports for things like LED control and display I/O, please do
 				the following:</p>
 			<ol>
@@ -115,7 +148,7 @@
 		</details>
 
 		<details>
-			<summary>3.5 Generate Code</summary>
+			<summary>3.6 Generate Code</summary>
 			<p>Now click Generate Code.</p>
 			<img class="modal-thumbnails" src="img/img_lab/generatecode.gif" alt="">
 			<p>What happens here is the src/smc_gen folder is populated with code reflecting the

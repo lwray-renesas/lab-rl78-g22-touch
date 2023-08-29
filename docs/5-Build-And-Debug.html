@@ -32,46 +32,16 @@
 
 		<!-- Start adding "details" sections for lab steps-->
 		<details open>
-			<summary>5.1 Edit the source</summary>
-			<p>First we need to open the main source file, located:<br>
-				<b>[Project]</b> &rarr; <b>src</b> &rarr; <b><i>&lt;project_name&gt;</i>.c</b><br>
-				Extern a declaration to the QE generated sample application and make a call to the application.
-			</p>
-			<pre><code class="C">extern void qe_touch_main(void);</code></pre>
-			<pre><code class="C">qe_touch_main();</code></pre>
-			<p>This is shown below.</p>
-			<img class="modal-thumbnails" src="img/img_lab/mainc.png" alt="">
-			<p>Second lets add some code which illuminates the on-board LED when a proximity event is detected.<br>
-				Copy the code below and copy it into the file we generated earlier located at:<br>
-				<b>[Project]</b> &rarr; <b>qe_gen</b> &rarr; <b>qe_touch_sample.c</b><br>
-				The code should go at line 67 where the TODO: statement exists.
-			</p>
-			<pre><code class="C">CCS0 = (button_status > 0UL) ? 2U : 0U;</code></pre>
-			<p>The code above toggle the current controlled IO registers to sink 5mA producing a magenta LED.<br>
-				Code insertion shown below:</p>
-			<img class="modal-thumbnails" src="img/img_lab/ledcode.png" alt="">
-		</details>
-
-		<details>
-			<summary>5.2 Build the project</summary>
-			<p>To build the project please <b>[Right-Click]</b> the project and click <b>Build Project</b>.</p>
+			<summary>5.1 Re-build the project</summary>
+			<p>Now we have tuned and configured our project we will need to re-build it.<br>
+				To build the project please <b>[Right-Click]</b> the project and click <b>Build Project</b>.</p>
 			<img class="modal-thumbnails" src="img/img_lab/projectbuild.gif" alt="">
 		</details>
 
 		<details>
-			<summary>5.3 Hardware</summary>
-			<p>Before debugging the project, please ensure headers are fitted to the header <b>H1</b> in positions 1-2
-				(VBATT-VDD) &amp; 4-5 (VDD_RL78 - VDD).<br>
-				Finally connect the E2-Lite - the user does not need to connect batteries for this lab as we will supply
-				the board via the debugger.
-			</p>
-			<img class="modal-thumbnails" src="img/img_lab/headers.png" alt="">
-			<img class="modal-thumbnails" src="img/img_lab/e2lite.png" alt="">
-		</details>
-
-		<details>
-			<summary>5.4 Debugging the project</summary>
-			<p>To start a debug session please select the project by clicking on it and click the debug icon along the
+			<summary>5.2 Debugging the project</summary>
+			<p>Now relaunch the debug session to re-load the binary.<br>
+				To start a debug session please select the project by clicking on it and click the debug icon along the
 				menu bar.
 			</p>
 			<img class="modal-thumbnails" src="img/img_lab/startdebug.gif" alt="">
@@ -81,14 +51,7 @@
 		</details>
 
 		<details>
-			<summary>5.5 Trigger the LED <i>[optional]</i></summary>
-			<p>Now as your hand approaches the proximity electrode the LED should light up.<br>
-				When the hand is retracted the LED should then turn off.
-			</p>
-		</details>
-
-		<details>
-			<summary>5.6 Start Monitoring (Emulator)</summary>
+			<summary>5.3 Start Monitoring (Serial)</summary>
 			<p>Now onto the second major function of the QE tools.<br>
 				The monitoring function allows us to configure the middleware in many ways - the following steps will
 				show
@@ -101,21 +64,21 @@
 		</details>
 
 		<details>
-			<summary>5.7 Enable Monitoring</summary>
-			<p>Navigate to <b>Start Monitoring (Emulator)</b> within <b>4.Monitoring</b> and select <b>Show Views</b>
+			<summary>5.4 Enable Monitoring</summary>
+			<p>Then navigate back to <b>Start Tuning (Serial)</b> within <b>4.Monitoring</b> in the cap touch workflow,
+				set the COM port to the COM port connected with the FTDI cable and click <b>Connect</b> then scroll down and click <b>Show Views</b>.
 			</p>
 			<img class="modal-thumbnails" src="img/img_lab/monitoringviews.gif" alt="">
 			<p>Now perform the following (you may need to expand the windows as shown in the .gif):</p>
 			<ol>
+				<li>In the <b>CapTouch Board Monitor (QE)</b> use the dropdown to select <b>Button00</b></li>
 				<li>In the <b>CapTouch Board Monitor (QE)</b> view select <b>Enable Monitoring</b></li>
-				<li>In the <b>CapTouch Status Chart (QE)</b> view select <b>Sync a selection</b></li>
-				<li>In the <b>CapTouch Parameters (QE)</b> view select <b>Sync a selection</b></li>
 			</ol>.
 			<img class="modal-thumbnails" src="img/img_lab/enablemonitoring.gif" alt="">
 		</details>
 
 		<details>
-			<summary>5.8 Change the threshold</summary>
+			<summary>5.5 Change the threshold</summary>
 			<p> Now we are going to change the threshold, the threshold is the value it which indicates a touch.</p>
 			<ul>
 				<li><b>[Threshold + hystersis]</b> is the point at which a "touch" is detected</li>
@@ -135,7 +98,7 @@
 		</details>
 
 		<details>
-			<summary>5.9 Change the positive noise filter cycle counts</summary>
+			<summary>5.6 Change the positive noise filter cycle counts</summary>
 			<p> Now we are going to change the positive noise filter cycle count value. <br>
 				This value represents the <b>number of consecutive touches</b> before propagating a touch event.<br>
 				The negative cycle count is the opposite i.e., the <b>number of consecutive no-touches</b> before propagating a no-touch event.
@@ -157,7 +120,7 @@
 		</details>
 
 		<details>
-			<summary>5.10 Change the drift correction</summary>
+			<summary>5.7 Change the drift correction</summary>
 			<p>To understand the drift correction value one must understand the reference value.
 				The reference value is the baseline value or the resting value with minimal external
 				disturbance - i.e., the svalue when the system is in idle state.<br>
@@ -182,7 +145,7 @@
 		</details>
 
 		<details>
-			<summary>5.11 Change the long touch cancel</summary>
+			<summary>5.8 Change the long touch cancel</summary>
 			<p>The long touch cancel value is how many consecutive touches are detected before cancelling the touch event.
 				On cancelling the touch event the reference value is immediately shifted up to the count value measured when long
 				touch cancel is triggered.<br>
@@ -201,7 +164,7 @@
 		</details>
 
 		<details>
-			<summary>5.12 Output parameters file</summary>
+			<summary>5.9 Output parameters file</summary>
 			<p>Now simply click the <b>Output Parameter Files</b> button in the <b>CapTouch Parameters (QE)</b> view.<br>
 				This saves the current set of parameters to the file <b>[Project]</b> &rarr; <b>qe_gen</b> &rarr; <b>qe_touch_config.c</b>.
 			</p>
@@ -209,7 +172,7 @@
 		</details>
 
 		<details>
-			<summary>5.13 Summary</summary>
+			<summary>5.10 Summary</summary>
 			<p>In this lab you have gone through the process for creating a capacitive touch application from
 				scratch.<br>
 				The principles outlined here abstracted from hardware can be used on any RL78G2x based device.
