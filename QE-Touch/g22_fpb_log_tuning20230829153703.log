@@ -1,0 +1,122 @@
+***** 2023/08/29 15:37:03 *****
+QE Version                                        :3.3.0.v20230526-0659
+Project Path                                      :D:\Renesas\Training\Labs\Projects\lab-rl78-g22-touch
+Configuration File                                :g22_fpb
+<< METHOD 0 >>
+[Button(self) 0]
+TS                                                : TS23,
+[Button(self) 1]
+TS                                                : TS24,
+[Slider 2]
+TS                                                : TS20, TS21, TS22,
+
+<<<< Tuning Type : Normal >>>>
+System Clock Frequency (MHz)                      :32.000
+PCLKB Frequency (MHz)                             :32.000
+CTSU Operating Frequency (MHz)                    :32.000
+Operating Voltage (V)                             :1.800
+
+---------- Phase1 ----------
+<< METHOD 0 >>
+[TS20]
+Count Value                                       : 1331
+Resistance Value (ohm)                            : 560
+Parasitic Capacitance (pF)                        : 9.243055
+Sensor Drive Pulse Frequency (MHz)                : 4.0
+
+[TS21]
+Count Value                                       : 1503
+Resistance Value (ohm)                            : 560
+Parasitic Capacitance (pF)                        : 10.4375
+Sensor Drive Pulse Frequency (MHz)                : 4.0
+
+[TS22]
+Count Value                                       : 1501
+Resistance Value (ohm)                            : 560
+Parasitic Capacitance (pF)                        : 10.423611
+Sensor Drive Pulse Frequency (MHz)                : 4.0
+
+[TS23]
+Count Value                                       : 1406
+Resistance Value (ohm)                            : 560
+Parasitic Capacitance (pF)                        : 9.763889
+Sensor Drive Pulse Frequency (MHz)                : 4.0
+
+[TS24]
+Count Value                                       : 1264
+Resistance Value (ohm)                            : 560
+Parasitic Capacitance (pF)                        : 8.777778
+Sensor Drive Pulse Frequency (MHz)                : 4.0
+
+
+---------- Phase2 ----------
+<< METHOD 0 >>
+[TS20]
+Sensor Drive Pulse Frequency (MHz)                : 4.0
+CTSUSNUM                                          : 7
+CTSUSDPA                                          : 3
+CTSUSO                                            : 273
+
+[TS21]
+Sensor Drive Pulse Frequency (MHz)                : 4.0
+CTSUSNUM                                          : 7
+CTSUSDPA                                          : 3
+CTSUSO                                            : 328
+
+[TS22]
+Sensor Drive Pulse Frequency (MHz)                : 4.0
+CTSUSNUM                                          : 7
+CTSUSDPA                                          : 3
+CTSUSO                                            : 327
+
+[TS23]
+Sensor Drive Pulse Frequency (MHz)                : 4.0
+CTSUSNUM                                          : 7
+CTSUSDPA                                          : 3
+CTSUSO                                            : 297
+
+[TS24]
+Sensor Drive Pulse Frequency (MHz)                : 4.0
+CTSUSNUM                                          : 7
+CTSUSDPA                                          : 3
+CTSUSO                                            : 251
+
+
+---------- Phase3 ----------
+<< METHOD 0 >>
+[Button(self) 0]
+  << TS23 >>
+  Count Value (Off)                               : 15447
+  Count Value (On)                                : 23182
+  Threshold                                       : 4641
+  Hysteresis                                      : 232
+
+[Button(self) 1]
+  << TS24 >>
+  Count Value (Off)                               : 15386
+  Count Value (On)                                : 23988
+  Threshold                                       : 5161
+  Hysteresis                                      : 258
+
+[Slider 2]
+Count Value (Off Min)                             : 15382
+Count Value (Off Max)                             : 15400
+Count Value (On Min)                              : 15361
+Count Value (On Max)                              : 21979
+Threshold                                         : 3309
+  << TS20 >>
+  Count Value (Off)                               : 15400
+  Count Value (On Min)                            : 15361
+  Count Value (On Max)                            : 21979
+  Difference (On)                                 : 6618
+  << TS21 >>
+  Count Value (Off)                               : 15382
+  Count Value (On Min)                            : 15376
+  Count Value (On Max)                            : 20588
+  Difference (On)                                 : 5212
+  << TS22 >>
+  Count Value (Off)                               : 15399
+  Count Value (On Min)                            : 15387
+  Count Value (On Max)                            : 20974
+  Difference (On)                                 : 5587
+
