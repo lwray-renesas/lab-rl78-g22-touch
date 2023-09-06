@@ -7,4 +7,4 @@ A lab on interacting with the buttons and slider on the RL78/G22 Fast Prototypin
 - all other files/folders are the project source which can be imported directly from git using the clone URI in e² studio.
 
 ## Lab webpage
-https://lwray-renesas.github.io/lab-rl78-g22-touch/
+https://lwray-renesas.github.io/rl78g22-touch-training

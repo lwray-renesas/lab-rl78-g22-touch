@@ -1,0 +1,219 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<!-- Useful for tablet and mobile based browsing-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Title of the page (not necessarily the lab) - for reference only, not displayed on the page-->
+	<title>Source Code</title>
+	<!-- CSS template stylesheet must be linked here-->
+	<link href="css/renesas_layout_style.css" rel="stylesheet" type="text/css">
+	<!-- Javascript based lab templating helper must be placed here-->
+	<script type="text/javascript" src="js/lab-templater.js"></script>
+
+	<!-- Addition of code highlighting Stylesheet & Script-->
+	<link rel="stylesheet" href="js/highlight/styles/atom-one-light.min.css">
+	<script type="text/javascript" src="js/highlight/highlight.min.js"></script>
+	<script>hljs.highlightAll();</script>
+</head>
+
+<body>
+	<!-- Populate the page header (banner, title & navigation menu)-->
+	<script>lab_templater.Generate_header();</script>
+
+	<!-- Begin the main content of the page-->
+	<div class="main-content">
+
+		<!-- Page/Section Summary & Description-->
+		<summary>4. QE Tuning</summary>
+		<p>Here we will guide you through the setup and tuning of the capactive touch application using the Renesas QE
+			tools.
+		</p>
+
+		<!-- Start adding "details" sections for lab steps-->
+		<details open>
+			<summary>4.1 Open QE Workflow</summary>
+			<p>First we need to open the QE workflow, a view which guides you through the process of
+				setting up a capactive touch project with QE tools. This is the foundation of a Renesas
+				Capacitive Touch Application.<br>
+				Please perform the following:<br>
+				<b>Renesas Views</b> &rarr; <b>Renesas QE</b> &rarr; <b>CapTouch Workflow (QE)</b><br>
+				In the event the window opens somewhere difficult to view, simply click and drag the tab
+				into the central view.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/qeopenwf.gif" alt="">
+		</details>
+
+		<details>
+			<summary>4.2 Select Project</summary>
+			<p>In the <b>Select a Project</b> within <b>1.Preparation</b> use the dropdown to select the project we have
+				just created.</p>
+			<img class="modal-thumbnails" src="img/img_lab/qeselectproject.gif" alt="">
+		</details>
+
+		<details>
+			<summary>4.3 Prepare Configuration</summary>
+			<p>In the <b>Prepare a Configuration</b> within <b>1.Preparation</b> use the dropdown to <b>Create a new
+					configuration</b>.<br>
+				Within the dialog perform the following:</p>
+			<ol>
+				<li>Select (click once) the <b>Button</b> object and place (click once) somewhere in the configuration
+					area</li>
+				<li>place (click once) somewhere else in the configuration area to make a second button</li>
+				<li>Press <b>[Esc]</b> to stop placing buttons</li>
+				<li>Select (click once) the <b>Slider</b> object and place (click once) somewhere in the configuration
+					area</li>
+				<li>Press <b>[Esc]</b> to stop placing sliders</li>
+				<li>Double-click each element to configure them and do the follwowing:
+					<ul>
+						<li><b>Button00</b>: <i>TS23</i></li>
+						<li>Click <b>OK</b></li>
+						<li><b>Button01</b>: <i>TS24</i></li>
+						<li>Click <b>OK</b></li>
+						<li><b>Slider00</b>: <i>TS20, TS21, TS22</i></li>
+						<li>Click <b>OK</b></li>
+					</ul>
+				</li>
+				<li>Click <b>Create</b> to finish creating the configuration</li>
+			</ol>
+			<img class="modal-thumbnails" src="img/img_lab/qeprepareconfig.gif" alt="">
+		</details>
+
+		<details>
+			<summary>4.4 Output Files</summary>
+			<p>In the <b>Start Tuning (Serial)</b> within <b>2.Tuning Touch Sensors</b> click <b>Output Files</b>.<br>
+				This generate the default application for tuning the application.</p>
+			<img class="modal-thumbnails" src="img/img_lab/outputfiles0.gif" alt="">
+		</details>
+
+		<details>
+			<summary>4.5 UART Callbacks</summary>
+			<p>To enable the UART within the application we must install the touch applications callbacks.<br>
+				Please copy the following code into <b>src</b> &rarr; <b>smc_gen</b> &rarr; <b>Config_UART1</b> &rarr; <b>Config_UART1_user.c</b>:
+			</p>
+			<p>First extern a declaration to the following function for access to the file.</p>
+			<pre><code class="C">extern void touch_uart_callback(uint16_t event);</code></pre>
+			<p>Then copy this code into the send end callback:</p>
+			<pre><code class="C">touch_uart_callback(0);</code></pre>
+			<p>Finally copy this code into the receive end callback:</p>
+			<pre><code class="C">touch_uart_callback(1);</code></pre>
+			<img class="modal-thumbnails" src="img/img_lab/touchuartcallback.png" alt="">
+		</details>
+
+		<details>
+			<summary>4.6 Call to sample project</summary>
+			<p>To run the tuning program we must make a call to it, navigate to your main function.</p>
+			<p>First extern a declaration to the following function for access to the file.</p>
+			<pre><code class="C">extern void qe_touch_main(void);</code></pre>
+			<p>Then copy this code into the main function after the EI statement.</p>
+			<pre><code class="C">qe_touch_main();</code></pre>
+			<img class="modal-thumbnails" src="img/img_lab/qesample.png" alt="">
+		</details>
+
+		<details>
+			<summary>4.7 Hardware</summary>
+			<p>Before debugging/tuning the project, please ensure the following hardware changes are made.<br>
+				Please note that this is where we must connect the FTDI cable and USB micro cable to the board.
+			</p>
+			<ul>
+				<li><b>J15</b>: <i>Open</i></li>
+				<li><b>J16</b>: <i>Shorted</i></li>
+				<li><b>J17</b>: <i>2-3</i></li>
+				<li>Connect USB micro to J9</li>
+				<li>Connect Black (FTDI - GND) to <b>GND</b> on J8</li>
+				<li>Connect Orange (FTDI - TX) to <b>0</b> on J7</li>
+				<li>Connect Yellow (FTDI - RX) to <b>1</b> on J7</li>
+			</ul>
+			<img class="modal-thumbnails" src="img/img_lab/hw.png" alt="">
+			<p>Please make a note of the COM ports on each the USB micro cable (debugger) and FTDI cable (UART) and note which is which.<br>
+			We will use these later in the lab.</p>
+		</details>
+
+		<details>
+			<summary>4.8 Debug Configuration Modification</summary>
+			<p>To enable COM port debugging please do the following.<br>
+				<b>[Right-Click Project]</b> &rarr; <b>Debug As</b> &rarr; <b>Debug Configurations</b><br>
+				Then inside the dialog select the hardware debug configuration of your project and:<br>
+				<b>Debugger tab</b> &rarr; <b>Connection Settings sub-tab</b><br>
+				Set <i>COM Port</i> to the COM port of your USB micro cable connected to the G22 FPB.<br>
+				Then apply and close.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/debugconfigfix.gif" alt="">
+		</details>
+
+		<details>
+			<summary>4.9 Start Tuning (Serial)</summary>
+			<p>Now return to the initial tuning screen and start tuning.<br>
+				The tuning process is central to the QE for Capacitive touch tools - it is during this process the
+				peripheral is
+				configured to work according to the physical hardware connected, i.e, the electrodes.<br>
+				As well as setting up the peripheral features such as scan times, frequencies and drive currents - which
+				are all
+				done automatically for us - we will set an initial proximity/touch threshold.<br><br>
+				So to do this first we build the project by <b>[Right-Clicking]</b> the project and clicking <b>Build Project</b>
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/projectbuild.gif" alt="">
+			
+			<p>Then debug/run the rpoject, to do so please select the project by clicking on it and click the debug icon along the
+				menu bar.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/startdebug.gif" alt="">
+			<p>Finally Click the <b>run</b> icon, first it will run to main, click the <b>run</b> icon again and the
+				project will start running.</p>
+			<img class="modal-thumbnails" src="img/img_lab/rundebug.gif" alt="">
+			
+			<p>Then navigate back to <b>Start Tuning (Serial)</b> within <b>2.Tuning Touch Sensors</b> in the cap touch workflow,
+				set the COM port to the COM port connected with the FTDI cable and click <b>Start Tuning</b>.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/starttuning.gif" alt="">
+
+			<p>Now follow the on screen insrtuctions, when confronted with the sensitivtity tuning (Step 5/6)
+				use your finger and touch the labelled button and notice how the counter value increases,
+				press any key on the keyboard while your hand is using normal touch pressure.<br>
+				Examples below are given for non-touch and touch counts respectively.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/normalcount.png" alt=""><br>
+			<img class="modal-thumbnails" src="img/img_lab/highcount.png" alt="">
+			<p>Continue following the on screen instuctions for all elements until you are asked if you would like to continue the tuning process, please do so.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/continuetuning.png" alt="">
+			<p>Finally terminate the debug session by clicking the <b>Stop</b> button (red square).</p>
+			<img class="modal-thumbnails" src="img/img_lab/terminatedebug.png" alt="">
+		</details>
+
+		<details>
+			<summary>4.10 Output Parameter Files</summary>
+			<p>Now the tuning has been performed, we need to extract the data which has been computed into useful
+				.c and .h files for use in our drivers and middleware.<br>
+				To do this, navigate to <b>Output Parameter Files</b> within <b>2.Tuning Touch Sensors</b> and select
+				<b>Output Parameter Files</b>.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/qeoutputparams.gif" alt="">
+		</details>
+
+		<details>
+			<summary>4.11 Implement Program</summary>
+			<p>Finally to simplify application creation, the QE tools can generate a simple sample applicaiton for
+				us.<br>
+				To do this, navigate to <b>Implement Program</b> within <b>3.Coding</b> and select <b>Show
+					Sample</b><br>
+				Inside the dialog that appears, select <b>Output to a file</b> - this outputs the sample .c file we will
+				reference later.
+			</p>
+			<img class="modal-thumbnails" src="img/img_lab/qeimplementprog.gif" alt="">
+		</details>
+
+		<!-- Prepare the pages modal images-->
+		<script>lab_templater.Prepare_modal();</script>
+
+		<!-- Button for going to the next page-->
+		<script>lab_templater.Generate_next_page_button("Next...");</script>
+
+		<!-- Setup code copying functionality on all appropriately formatted code snippets-->
+		<script>Setup_code_copy();</script>
+
+	</div>
+</body>
+
+</html>
